@@ -20,7 +20,7 @@ function divide(a, b) {
 
 let firstNumber
 let secondNumber
-let operator
+let operatorChosen
 
 function operate(a, b, operatorChosen){
   if (operatorChosen === 'add') {
@@ -32,4 +32,28 @@ function operate(a, b, operatorChosen){
   } else { 
     return divide(a, b);
   }
+}
+
+// function displayNumber(button) {
+//   let number = button.textContent; // Get the text content of the clicked button
+//   let displayDiv = document.getElementById("displayDiv");
+//   let currentContent = displayDiv.textContent; // Get the current content of the div
+//   displayDiv.innerHTML="";
+//   displayDiv.textContent = currentContent + number; // Concatenate the new number to the current content
+// }
+
+let isNewNum = true;
+let displayText = ""; // Initialize displayText as an empty string
+
+function yourFunction(buttonTextContent) {
+    let displayDiv = document.getElementById("displayDiv");
+    
+    if (isNewNum) {
+        // Clear current display output
+        displayText = "";
+        isNewNum = false;
+    }
+    
+    displayText += buttonTextContent; // Append the button text content to the displayText
+    displayDiv.textContent = displayText; // Update the display with the new displayText value
 }
