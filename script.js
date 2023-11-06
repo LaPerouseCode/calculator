@@ -11,12 +11,25 @@ function mult(a, b){
   return a * b;
 }
 // FUNCTION DIVIDE
-function divide(a, b){
+function divide(a, b) {
+  if (b === 0) {
+    return "Error: Division by zero!";
+  }
   return a / b;
 }
 
 let firstNumber
-let operator
 let secondNumber
+let operator
 
-
+function operate(a, b, operatorChosen){
+  if (operator === 'add') {
+    return add(a, b);
+  } else if (operator === 'sub') {
+    return sub(a, b);
+  } else if (operator === 'mult') {
+    return mult(a, b);
+  } else { 
+    return divide(a, b);
+  }
+}
