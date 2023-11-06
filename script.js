@@ -23,11 +23,11 @@ let secondNumber
 let operator
 
 function operate(a, b, operatorChosen){
-  if (operator === 'add') {
+  if (operatorChosen === 'add') {
     return add(a, b);
-  } else if (operator === 'sub') {
+  } else if (operatorChosen === 'sub') {
     return sub(a, b);
-  } else if (operator === 'mult') {
+  } else if (operatorChosen === 'mult') {
     return mult(a, b);
   } else { 
     return divide(a, b);
