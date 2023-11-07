@@ -1,59 +1,89 @@
-// FUNCTION ADD
-function add(a, b){ 
-  return a + b;
-}
-// FUNCTION SUB
-function sub(a, b){
-  return a - b;
-}
-// FUNCTION MULTIPLY
-function mult(a, b){
-  return a * b;
-}
-// FUNCTION DIVIDE
-function divide(a, b) {
-  if (b === 0) {
-    return "Error: Division by zero!";
-  }
-  return a / b;
-}
+let operator = "";
+let previousValue = "";
+let currentValue = "";
 
-let firstNumber
-let secondNumber
-let operatorChosen
+document.addEventListener("DOMContentLoaded", function(){
+    //Store all components on HTML in our JS
+    let clear = document.querySelector("#clear-btn");
+    let equal = document.querySelector(".equal");
+    let decimal = document.querySelector(".decimal");
 
-function operate(a, b, operatorChosen){
-  if (operatorChosen === 'add') {
-    return add(a, b);
-  } else if (operatorChosen === 'sub') {
-    return sub(a, b);
-  } else if (operatorChosen === 'mult') {
-    return mult(a, b);
-  } else { 
-    return divide(a, b);
-  }
-}
+    let numbers = document.querySelectorAll(".number");
+    let operators = document.querySelectorAll(".operator");
 
-// function displayNumber(button) {
-//   let number = button.textContent; // Get the text content of the clicked button
-//   let displayDiv = document.getElementById("displayDiv");
-//   let currentContent = displayDiv.textContent; // Get the current content of the div
-//   displayDiv.innerHTML="";
-//   displayDiv.textContent = currentContent + number; // Concatenate the new number to the current content
-// }
+    let previousScreen = document.querySelector(".previous");
+    let currentScreen = document.querySelector(".current");
 
-let isNewNum = true;
-let displayText = ""; // Initialize displayText as an empty string
+    numbers.forEach((number) => number.addEventListener("click", function(e){
+        handleNumber(e.target.textContent)
+        currentScreen.textContent = currentValue;
+    }));
 
-function yourFunction(buttonTextContent) {
-    let displayDiv = document.getElementById("displayDiv");
-    
-    if (isNewNum) {
-        // Clear current display output
-        displayText = "";
-        isNewNum = false;
+    operators.forEach((op) => op.addEventListener("click", function(e){
+        handleOperator(e.target.textContent)
+        previousScreen.textContent = previousValue + " " + operator;
+        currentScreen.textContent = currentValue;
+    }));
+
+    clear.addEventListener("click", function(){
+        previousValue = '';
+        currentValue = '';
+        operator = '';
+        previousScreen.textContent = currentValue;
+        currentScreen.textContent = currentValue;
+    })
+    equal.addEventListener("click", function(){
+      calculate()
+      previousScreen.textContent = '';
+      currentScreen.textContent = previousValue;
+      if(previousValue.length <= 5){
+        currentScreen.textContent = previousValue;
+      } else {
+        currentScreen.textContent = previousValue.slice(0,5) + "..." ;
+      }
+
+    })
+
+    decimal.addEventListener("click", function(){
+      addDecimal();
+    })
+})
+
+function handleNumber(num){
+    if(currentValue.length <= 5){
+        currentValue += num;
     }
-    
-    displayText += buttonTextContent; // Append the button text content to the displayText
-    displayDiv.textContent = displayText; // Update the display with the new displayText value
+}
+
+function handleOperator(op){
+    operator = op;
+    previousValue = currentValue;
+    currentValue = '';
+}
+
+function calculate(){
+      previousValue = Number(previousValue);
+      currentValue = Number(currentValue);
+
+      if (operator === "+"){
+          previousValue += currentValue;
+      } else if (operator === "-"){
+        previousValue -= currentValue;
+      } else if (operator === "x"){
+        previousValue *= currentValue;
+      } else {
+        previousValue /= currentValue;
+    }
+        previousValue = roundNumber(previousValue);
+        previousValue = previousValue.toString();
+        currentValue = previousValue.toString();
+  }
+function roundNumber(num){
+return Math.round(num * 1000) / 1000;
+}
+
+function addDecimal(){
+if(!currentValue.includes(".")){
+  currentValue += '.';
+}
 }
